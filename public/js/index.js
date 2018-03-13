@@ -4,16 +4,11 @@ var socket = io();
 socket.on('connect', function () {
 console.log('New user connected');
     
-    
-    socket.emit('createEmail', {
-       to: 'neki@mail.com',
-       text: 'neki tekst'    
-    });
-    
-    socket.emit('createMessage', {
+
+ /*   socket.emit('createMessage', {
         from: 'vidix',
-        text: 'mssage text'
-    });
+        text: 'message text'
+    });*/
 });
 
 //using disconection with socket.io
@@ -22,10 +17,6 @@ console.log('Disconnected from server');
 });
 
 //emited by the server lisend by the client 
-socket.on('newEmail', function (email) {
-    console.log('New email', email);
-});
-
 socket.on('newMessage', function (message) {
     console.log('New message', message);
 });

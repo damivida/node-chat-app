@@ -16,33 +16,28 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('User connected ');
     
-    //emiting(creating an event new emila)
-    socket.emit('newEmail', {
-        from: 'vida.damir@gmail.com',
-        text: 'Hell, it\'s working',
-        createdAt: 5895
-    });
-    
-    //emiting an event new message
-    socket.emit('newMessage', {
+ 
+    //emiting an event - new message
+/*    socket.emit('newMessage', {
         from: 'vida',
         text: 'Some text in form',
         createdAt: 11/3/2018
-    });
+    });*/
     
     
     
      //lisening for an even from client
-     socket.on('createEmail', (newEmail) => {
-         console.log('Creating an:', newEmail);
-     });
-    
-    socket.on('createMessage', (newMessage) => {
-        console.log('Creating an:', newMessage);
+      socket.on('createMessage', (message) => {
+        console.log('Creating an:', message);
+          io.emit('newMessage', {
+              from: message.from,
+              text: message.text,
+              createdAt: new Date().getTime()
+          });
     });
     
     
-    //lisening for an even from client
+    //lisening for an even from client 
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
