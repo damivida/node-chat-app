@@ -20,3 +20,9 @@ console.log('Disconnected from server');
 socket.on('newMessage', function (message) {
     console.log('New message', message);
 });
+
+
+//emited by the server lisend by the client 
+/*socket.on('wellcomeMessage', function(message) {
+    console.log('Welcome message', message);
+});*/

@@ -26,10 +26,39 @@ io.on('connection', (socket) => {
     
     
     
+    //challange-
+    
+    //snding a message to new user
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: 'Welcome to the chat app ...',
+        createdAt: new Date().getTime()
+    });
+    
+   
+    //sending a message to other users that new user is connected
+    socket.broadcast.emit('newMessage', {
+           from: 'Admin',
+           text: 'New user joined',
+           createdAt: new Date().getTime()
+
+    });
+  
+    
+    
+    
      //lisening for an even from client
       socket.on('createMessage', (message) => {
         console.log('Creating an:', message);
-          io.emit('newMessage', {
+          /*io.emit('newMessage', {
+              from: message.from,
+              text: message.text,
+              createdAt: new Date().getTime()
+          });*/
+          
+          
+          //sending message to all users except sender
+          socket.broadcast.emit('newMessage', {
               from: message.from,
               text: message.text,
               createdAt: new Date().getTime()
