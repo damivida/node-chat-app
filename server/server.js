@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
 const publicPath = path.join(__dirname, '../public');
 var app = express();
 var port = process.env.PORT || 3000;
@@ -29,20 +30,11 @@ io.on('connection', (socket) => {
     //challange-
     
     //snding a message to new user
-    socket.emit('newMessage', {
-        from: 'Admin',
-        text: 'Welcome to the chat app ...',
-        createdAt: new Date().getTime()
-    });
+    socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
     
    
     //sending a message to other users that new user is connected
-    socket.broadcast.emit('newMessage', {
-           from: 'Admin',
-           text: 'New user joined',
-           createdAt: new Date().getTime()
-
-    });
+    socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
   
     
     
@@ -50,19 +42,15 @@ io.on('connection', (socket) => {
      //lisening for an even from client
       socket.on('createMessage', (message) => {
         console.log('Creating an:', message);
-          /*io.emit('newMessage', {
+          io.emit('newMessage', generateMessage(message.from, message.text));
+          
+          
+          //sending message to all users except sender
+       /*   socket.broadcast.emit('newMessage', {
               from: message.from,
               text: message.text,
               createdAt: new Date().getTime()
           });*/
-          
-          
-          //sending message to all users except sender
-          socket.broadcast.emit('newMessage', {
-              from: message.from,
-              text: message.text,
-              createdAt: new Date().getTime()
-          });
     });
     
     
