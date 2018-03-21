@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
     
     
     
-    //challange-
+    //challange-sending maessage from server
     
     //snding a message to new user
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
@@ -37,12 +37,15 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
   
     
+
     
     
-     //lisening for an even from client
-      socket.on('createMessage', (message) => {
+     //lisening for an even from client(and sending back to client)
+      socket.on('createMessage', (message, callback) => {
         console.log('Creating an:', message);
           io.emit('newMessage', generateMessage(message.from, message.text));
+          callback('This is from the server');
+          
           
           
           //sending message to all users except sender
