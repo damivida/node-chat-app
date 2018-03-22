@@ -38,17 +38,16 @@ io.on('connection', (socket) => {
   
     
 
-    
-    
      //lisening for an even from client(and sending back to client, message)
       socket.on('createMessage', (message, callback) => {
         console.log('Creating an:', message);
           io.emit('newMessage', generateMessage(message.from, message.text));
-          callback('This is from the server');
+          callback();
           
-       });
+        });
     
-    //lisening for an even from client(and sending back to client, message)     
+    
+    //lisening for an even from client(and sending back to client, Locationmessage)     
           socket.on('createLocationMessage', (coords) => {
               io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
           });
