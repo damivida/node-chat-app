@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
     
     //challange-sending maessage from server
     
-    //snding a message to new user
+    //sending a message to new user
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
     
    

@@ -14,10 +14,10 @@ console.log('Disconnected from server');
 
 //emited by the server lisend by the client(message) 
 socket.on('newMessage', function (message) {
-    console.log('New message', message);
+    var formatedTime = moment(message.createdAt).format('h:mm a');
     
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formatedTime}: ${message.text}`);
     
     jQuery('#messages').append(li);
 });
@@ -25,12 +25,13 @@ socket.on('newMessage', function (message) {
 
 //emited by the server lisend by the client(location)
 socket.on('newLocationMessage', function(message) {
+    var formatedTime = moment(message.createdAt).format('h:mm a');
     
     var li = jQuery('<li></li>');
     var a = jQuery('<a target= "_blank">My current location</a>');
     
 
-    li.text(`${message.from}: `);
+    li.text(`${message.from} ${formatedTime}: `);
     a.attr('href', message.url);
     li.append(a);
     
@@ -64,6 +65,8 @@ locationButton.on('click', function () {
     
   navigator.geolocation.getCurrentPosition(function(position) {
       locationButton.removeAttr('disabled').text('Send location');
+      
+      
       socket.emit('createLocationMessage', {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude  
