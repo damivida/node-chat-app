@@ -1,6 +1,6 @@
 var socket = io(); 
   
-// scroll function
+// auto scrolling function
 function scrollToBottom () {
   // Selectors
   var messages = jQuery('#messages');
@@ -65,7 +65,7 @@ socket.on('newLocationMessage', function(message) {
 });
 
 
-//jQuery dom manipulation, emiting message from client and callback confirmation
+//jQuery dom , emiting message from client and callback confirmation
 jQuery('#message-form').on('submit', function(e) {
     e.preventDefault();
     
